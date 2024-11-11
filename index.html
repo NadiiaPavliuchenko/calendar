@@ -9,11 +9,10 @@
     <div class="app">
       <div class="controls">
         <button type="button" class="add-task js-add-task">Add</button>
+        <button type="button" class="prev js-prevnext">prev</button>
         <p class="js-month month"></p>
-        <div class="button-controls">
-          <button type="button" class="prev js-prev">prev</button>
-          <button type="button" class="next js-next">next</button>
-        </div>
+
+        <button type="button" class="next js-prevnext">next</button>
         <input
           type="date"
           name="date"
@@ -21,7 +20,7 @@
           class="js-choose-date choose-date"
         />
       </div>
-      <div class="calendar"></div>
+      <ul class="calendar"></ul>
     </div>
     <script type="module" src="src/js/main.js"></script>
   </body>

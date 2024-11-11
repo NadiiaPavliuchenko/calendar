@@ -2,14 +2,14 @@ import "../scss/style.scss";
 
 const refs = {
   calendar: document.querySelector(".calendar"),
-  buttons: document.querySelector(".button-controls"),
+  buttons: document.querySelectorAll(".js-prevnext"),
   curDate: document.querySelector(".js-month"),
   datepicker: document.querySelector(".js-choose-date"),
 };
 
-const TODAY = new Date();
-const MONTH = TODAY.getMonth();
-const YEAR = TODAY.getFullYear();
+let TODAY = new Date();
+let MONTH = TODAY.getMonth();
+let YEAR = TODAY.getFullYear();
 
 const days = [
   "Sunday",
@@ -48,12 +48,13 @@ function isLeapYear() {
 const fragment = document.createDocumentFragment();
 
 const createCells = () => {
-  // const firstDay = new Date(YEAR, MONTH, 1).getDate();
+  refs.calendar.innerHTML = "";
 
-  // const lastDay = new Date(YEAR, MONTH + 1, 0).getDate();
+  const curMonth = months[TODAY.getMonth()];
+  refs.curDate.innerText = `${curMonth.month} ${YEAR}`;
 
-  for (let i = 1; i <= months[TODAY.getMonth()].days; i += 1) {
-    const cell = document.createElement("div");
+  for (let i = 1; i <= curMonth.days; i += 1) {
+    const cell = document.createElement("li");
     cell.classList.add("cell");
 
     const cellDate = new Date(YEAR, MONTH, i);
@@ -79,3 +80,18 @@ const createCells = () => {
 };
 
 createCells();
+
+refs.buttons.forEach((button) =>
+  button.addEventListener("click", () => {
+    MONTH = button.classList.contains("prev") ? MONTH - 1 : MONTH + 1;
+
+    if (MONTH >= 0 && MONTH < 12) {
+      TODAY = new Date(YEAR, MONTH, new Date().getDate());
+      YEAR = TODAY.getFullYear();
+      MONTH = TODAY.getMonth();
+    } else {
+      TODAY = new Date();
+    }
+    createCells();
+  })
+);
