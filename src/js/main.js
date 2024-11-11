@@ -84,13 +84,16 @@ createCells();
 refs.buttons.forEach((button) =>
   button.addEventListener("click", () => {
     MONTH = button.classList.contains("prev") ? MONTH - 1 : MONTH + 1;
+    console.log(MONTH);
 
-    if (MONTH >= 0 && MONTH < 12) {
+    if (MONTH >= 0 && MONTH <= 12) {
       TODAY = new Date(YEAR, MONTH, new Date().getDate());
       YEAR = TODAY.getFullYear();
       MONTH = TODAY.getMonth();
-    } else {
-      TODAY = new Date();
+    } else if (MONTH >= 12) {
+      YEAR = YEAR + 1;
+    } else if (MONTH <= 0) {
+      YEAR = YEAR - 1;
     }
     createCells();
   })
