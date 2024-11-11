@@ -2,9 +2,14 @@ import "../scss/style.scss";
 
 const refs = {
   calendar: document.querySelector(".calendar"),
+  buttons: document.querySelector(".button-controls"),
+  curDate: document.querySelector(".js-month"),
+  datepicker: document.querySelector(".js-choose-date"),
 };
 
 const TODAY = new Date();
+const MONTH = TODAY.getMonth();
+const YEAR = TODAY.getFullYear();
 
 const days = [
   "Sunday",
@@ -40,21 +45,37 @@ function isLeapYear() {
   return days;
 }
 
-// const getCurrentDate = () => {
-//   return {
-//     date: TODAY.getDate(),
-//     day: days[TODAY.getDay()],
-//     month: months[TODAY.getMonth()].month,
-//     year: TODAY.getFullYear(),
-//   };
-// };
+const fragment = document.createDocumentFragment();
 
 const createCells = () => {
+  // const firstDay = new Date(YEAR, MONTH, 1).getDate();
+
+  // const lastDay = new Date(YEAR, MONTH + 1, 0).getDate();
+
   for (let i = 1; i <= months[TODAY.getMonth()].days; i += 1) {
-    let cell = document.createElement("div");
+    const cell = document.createElement("div");
     cell.classList.add("cell");
-    refs.calendar.appendChild(cell);
+
+    const cellDate = new Date(YEAR, MONTH, i);
+
+    if (
+      cellDate.getFullYear() === YEAR &&
+      cellDate.getMonth() === MONTH &&
+      cellDate.getDate() === TODAY.getDate()
+    ) {
+      cell.classList.add("today");
+    }
+
+    cell.innerHTML = `<div class="cell-features">
+                    <p class="cell-date">${i}</p>
+                    <p class=cell-month>${days[
+                      new Date(YEAR, MONTH, i).getDay()
+                    ].substring(0, 2)}</p>
+                  </div>
+                  <div class="tasks-container"></div>`;
+    fragment.appendChild(cell);
   }
+  refs.calendar.appendChild(fragment);
 };
 
 createCells();
