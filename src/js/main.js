@@ -7,9 +7,11 @@ const refs = {
   datepicker: document.querySelector(".js-choose-date"),
 };
 
-let TODAY = new Date();
-let MONTH = TODAY.getMonth();
-let YEAR = TODAY.getFullYear();
+const CURRENTDATE = new Date();
+
+let today = new Date();
+let month = today.getMonth();
+let year = today.getFullYear();
 
 const days = [
   "Sunday",
@@ -37,7 +39,7 @@ const months = [
 ];
 
 function isLeapYear() {
-  const year = TODAY.getFullYear();
+  const year = today.getFullYear();
   let days = 28;
   if (year % 400 === 0) {
     days = 29;
@@ -47,30 +49,33 @@ function isLeapYear() {
 
 const fragment = document.createDocumentFragment();
 
+const markToday = (curDay, cellDate, cell) => {
+  if (
+    cellDate.getFullYear() === curDay.getFullYear() &&
+    cellDate.getMonth() === curDay.getMonth() &&
+    cellDate.getDate() === curDay.getDate()
+  ) {
+    cell.classList.add("today");
+  }
+};
+
 const createCells = () => {
   refs.calendar.innerHTML = "";
 
-  const curMonth = months[TODAY.getMonth()];
-  refs.curDate.innerText = `${curMonth.month} ${YEAR}`;
+  const curMonth = months[today.getMonth()];
+  refs.curDate.innerText = `${curMonth.month} ${year}`;
 
   for (let i = 1; i <= curMonth.days; i += 1) {
     const cell = document.createElement("li");
     cell.classList.add("cell");
 
-    const cellDate = new Date(YEAR, MONTH, i);
-
-    if (
-      cellDate.getFullYear() === YEAR &&
-      cellDate.getMonth() === MONTH &&
-      cellDate.getDate() === TODAY.getDate()
-    ) {
-      cell.classList.add("today");
-    }
+    const cellDate = new Date(year, month, i);
+    markToday(cellDate, CURRENTDATE, cell);
 
     cell.innerHTML = `<div class="cell-features">
                     <p class="cell-date">${i}</p>
                     <p class=cell-month>${days[
-                      new Date(YEAR, MONTH, i).getDay()
+                      new Date(year, month, i).getDay()
                     ].substring(0, 2)}</p>
                   </div>
                   <div class="tasks-container"></div>`;
@@ -83,17 +88,15 @@ createCells();
 
 refs.buttons.forEach((button) =>
   button.addEventListener("click", () => {
-    MONTH = button.classList.contains("prev") ? MONTH - 1 : MONTH + 1;
-    console.log(MONTH);
+    month = button.classList.contains("prev") ? month - 1 : month + 1;
+    console.log(month);
 
-    if (MONTH >= 0 && MONTH <= 12) {
-      TODAY = new Date(YEAR, MONTH, new Date().getDate());
-      YEAR = TODAY.getFullYear();
-      MONTH = TODAY.getMonth();
-    } else if (MONTH >= 12) {
-      YEAR = YEAR + 1;
-    } else if (MONTH <= 0) {
-      YEAR = YEAR - 1;
+    if (month >= 0 && month <= 12) {
+      today = new Date(year, month, new Date().getDate());
+      year = today.getFullYear();
+      month = today.getMonth();
+    } else if (month >= 12) {
+      year = year + 1;
     }
     createCells();
   })
