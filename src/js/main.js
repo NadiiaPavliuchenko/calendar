@@ -49,7 +49,7 @@ function isLeapYear() {
 
 const fragment = document.createDocumentFragment();
 
-const markToday = (curDay, cellDate, cell) => {
+const markToday = (cell, cellDate, curDay) => {
   if (
     cellDate.getFullYear() === curDay.getFullYear() &&
     cellDate.getMonth() === curDay.getMonth() &&
@@ -59,7 +59,7 @@ const markToday = (curDay, cellDate, cell) => {
   }
 };
 
-const createCells = () => {
+const createCells = (curDay = CURRENTDATE) => {
   refs.calendar.innerHTML = "";
 
   const curMonth = months[today.getMonth()];
@@ -70,7 +70,7 @@ const createCells = () => {
     cell.classList.add("cell");
 
     const cellDate = new Date(year, month, i);
-    markToday(cellDate, CURRENTDATE, cell);
+    markToday(cell, cellDate, curDay);
 
     cell.innerHTML = `<div class="cell-features">
                     <p class="cell-date">${i}</p>
@@ -98,3 +98,12 @@ refs.buttons.forEach((button) =>
     createCells();
   })
 );
+
+refs.datepicker.addEventListener("change", (e) => {
+  today = new Date(e.target.value);
+
+  year = today.getFullYear();
+  month = today.getMonth();
+
+  createCells(today);
+});
