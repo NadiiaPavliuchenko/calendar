@@ -3,18 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/calendar/assets/favicon-D48PnCYI.png" type="image/x-icon" />
     <title>Calendar App</title>
-    <script type="module" crossorigin src="/calendar/assets/index-DUOsO4SE.js"></script>
+    <script type="module" crossorigin src="/calendar/assets/index-CTLkL_Ph.js"></script>
     <link rel="stylesheet" crossorigin href="/calendar/assets/index-IawG9W9c.css">
   </head>
   <body>
     <div class="app">
       <div class="controls">
-        <button type="button" class="add-task js-add-task">Add</button>
-        <button type="button" class="prev js-prevnext">prev</button>
+        <button type="button" class="add-task js-add-task">
+          <svg class="add-icon" width="20" height="20">
+            <use href="/calendar/assets/icons-ZCxII98E.svg#add_icon"></use>
+          </svg>
+        </button>
+        <button type="button" class="prev js-prevnext">
+          <svg class="prev-icon" width="20" height="20">
+            <use href="/calendar/assets/icons-ZCxII98E.svg#left_arrow_icon"></use>
+          </svg>
+        </button>
         <p class="js-month month"></p>
 
-        <button type="button" class="next js-prevnext">next</button>
+        <button type="button" class="next js-prevnext">
+          <svg class="next-icon" width="20" height="20">
+            <use href="/calendar/assets/icons-ZCxII98E.svg#right_arrow_icon"></use>
+          </svg>
+        </button>
         <input
           type="date"
           name="date"
