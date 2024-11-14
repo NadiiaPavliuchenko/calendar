@@ -1,4 +1,5 @@
 import "../scss/style.scss";
+import "./modal";
 
 const refs = {
   calendar: document.querySelector(".calendar"),
@@ -47,8 +48,6 @@ function isLeapYear() {
   return days;
 }
 
-const fragment = document.createDocumentFragment();
-
 const markToday = (cell, cellDate, curDay) => {
   if (
     cellDate.getFullYear() === curDay.getFullYear() &&
@@ -59,13 +58,13 @@ const markToday = (cell, cellDate, curDay) => {
   }
 };
 
+const fragment = document.createDocumentFragment();
+
 const drawCalendar = (curDay = CURRENTDATE) => {
   refs.calendar.innerHTML = "";
 
   const curMonth = months[today.getMonth()];
   refs.curDate.innerText = `${curMonth.month} ${year}`;
-
-  const fragment = document.createDocumentFragment();
 
   const createCell = (day, isCurrentMonth) => {
     const cell = document.createElement("li");
