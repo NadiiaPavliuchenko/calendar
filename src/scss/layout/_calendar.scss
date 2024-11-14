@@ -11,4 +11,7 @@
     background-color: rgba(173, 255, 47, 0.5);
     border-color: rgb(173, 255, 47);
   }
+  &.disabled {
+    color: lightgray;
+  }
 }

@@ -59,32 +59,50 @@ const markToday = (cell, cellDate, curDay) => {
   }
 };
 
-const createCells = (curDay = CURRENTDATE) => {
+const drawCalendar = (curDay = CURRENTDATE) => {
   refs.calendar.innerHTML = "";
 
   const curMonth = months[today.getMonth()];
   refs.curDate.innerText = `${curMonth.month} ${year}`;
 
-  for (let i = 1; i <= curMonth.days; i += 1) {
+  const fragment = document.createDocumentFragment();
+
+  const createCell = (day, isCurrentMonth) => {
     const cell = document.createElement("li");
     cell.classList.add("cell");
+    if (!isCurrentMonth) cell.classList.add("disabled");
 
-    const cellDate = new Date(year, month, i);
+    let cellDate;
+    !isCurrentMonth
+      ? (cellDate = new Date(year, month - 1, day))
+      : (cellDate = new Date(year, month, day));
     markToday(cell, cellDate, curDay);
 
     cell.innerHTML = `<div class="cell-features">
-                    <p class="cell-date">${i}</p>
-                    <p class=cell-month>${days[
-                      new Date(year, month, i).getDay()
-                    ].substring(0, 2)}</p>
-                  </div>
-                  <div class="tasks-container"></div>`;
-    fragment.appendChild(cell);
+                        <p class="cell-date">${day}</p>
+                        <p class="cell-month">${days[
+                          cellDate.getDay()
+                        ].substring(0, 2)}</p>
+                      </div>
+                      <div class="tasks-container"></div>`;
+    return cell;
+  };
+
+  const lastDate = new Date(year, month, 0).getDate();
+  const lastDay = new Date(year, month, 0).getDay();
+
+  for (let i = lastDate - lastDay; i <= lastDate; i++) {
+    fragment.appendChild(createCell(i, false));
   }
+
+  for (let i = 1; i <= curMonth.days; i++) {
+    fragment.appendChild(createCell(i, true));
+  }
+
   refs.calendar.appendChild(fragment);
 };
 
-createCells();
+drawCalendar();
 
 refs.buttons.forEach((button) =>
   button.addEventListener("click", () => {
@@ -95,7 +113,7 @@ refs.buttons.forEach((button) =>
     year = today.getFullYear();
     month = today.getMonth();
 
-    createCells();
+    drawCalendar();
   })
 );
 
@@ -105,5 +123,5 @@ refs.datepicker.addEventListener("change", (e) => {
   year = today.getFullYear();
   month = today.getMonth();
 
-  createCells(today);
+  drawCalendar(today);
 });
