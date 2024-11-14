@@ -1,3 +1,5 @@
+import { setDateValue } from "./addTask";
+
 const refs = {
   openModal: document.querySelector(".js-add-task"),
   backdrop: document.querySelector(".js-backdrop"),
@@ -5,22 +7,30 @@ const refs = {
   closeModal: document.querySelector(".js-close"),
 };
 
-refs.openModal.addEventListener("click", () => {
+export const open = (date = new Date()) => {
+  setDateValue(date);
   refs.backdrop.classList.add("is-open");
+};
+
+const close = () => {
+  refs.backdrop.classList.remove("is-open");
+};
+refs.openModal.addEventListener("click", () => {
+  open();
 });
 
 refs.closeModal.addEventListener("click", () => {
-  refs.backdrop.classList.remove("is-open");
+  close();
 });
 
 window.addEventListener("click", (e) => {
   if (e.target === refs.backdrop) {
-    refs.backdrop.classList.remove("is-open");
+    close();
   }
 });
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape" && refs.backdrop.classList.contains("is-open")) {
-    refs.backdrop.classList.remove("is-open");
+    close();
   }
 });
