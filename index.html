@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/calendar/assets/favicon-D48PnCYI.png" type="image/x-icon" />
+    <link rel="icon" href="/calendar/favicon/favicon.png" type="image/x-icon" />
     <title>Calendar App</title>
-    <script type="module" crossorigin src="/calendar/assets/index-CTLkL_Ph.js"></script>
-    <link rel="stylesheet" crossorigin href="/calendar/assets/index-IawG9W9c.css">
+    <script type="module" crossorigin src="/calendar/assets/index-DhBQSCco.js"></script>
+    <link rel="stylesheet" crossorigin href="/calendar/assets/index-D_q3M_MK.css">
   </head>
   <body>
     <div class="app">
@@ -18,14 +18,14 @@
         </button>
         <button type="button" class="prev js-prevnext">
           <svg class="prev-icon" width="20" height="20">
-            <use href="/calendar/assets/icons-ZCxII98E.svg#left_arrow_icon"></use>
+            <use href="/calendar/images/icons.svg#left_arrow_icon"></use>
           </svg>
         </button>
         <p class="js-month month"></p>
 
         <button type="button" class="next js-prevnext">
           <svg class="next-icon" width="20" height="20">
-            <use href="/calendar/assets/icons-ZCxII98E.svg#right_arrow_icon"></use>
+            <use href="/calendar/images/icons.svg#right_arrow_icon"></use>
           </svg>
         </button>
         <input
@@ -36,6 +36,38 @@
         />
       </div>
       <ul class="calendar"></ul>
+      <div class="backdrop js-backdrop">
+        <div class="modal js-modal">
+          <button type="button" class="close-modal js-close">
+            <svg class="close-icon" width="40" height="40">
+              <use href="/calendar/images/icons.svg#close_icon"></use>
+            </svg>
+          </button>
+          <h2>Add new idea item</h2>
+          <form class="modal-form">
+            <label class="form-label">Title</label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Title goes here"
+              required
+            />
+            <label class="form-label">Description</label>
+            <input
+              type="textarea"
+              class="description"
+              name="description"
+              id="description"
+              rows="4"
+              cols="1"
+            />
+            <label class="form-label"></label>
+            <input type="datetime-local" class="date" id="date" />
+            <button type="submit" class="submit">Save</button>
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 </html>
