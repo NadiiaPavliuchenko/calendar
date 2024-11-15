@@ -5,66 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/calendar/favicon/favicon.png" type="image/x-icon" />
     <title>Calendar App</title>
-    <script type="module" crossorigin src="/calendar/assets/index-DhBQSCco.js"></script>
-    <link rel="stylesheet" crossorigin href="/calendar/assets/index-D_q3M_MK.css">
+    <script type="module" crossorigin src="/calendar/assets/index-CQ-SULCD.js"></script>
+    <link rel="stylesheet" crossorigin href="/calendar/assets/index-Chh0uCK6.css">
   </head>
   <body>
     <div class="app">
       <div class="controls">
         <button type="button" class="add-task js-add-task">
-          <svg class="add-icon" width="20" height="20">
-            <use href="/calendar/assets/icons-ZCxII98E.svg#add_icon"></use>
+          <svg class="add-icon" width="25" height="25">
+            <use href="/calendar/images/icons.svg#add_icon"></use>
           </svg>
         </button>
-        <button type="button" class="prev js-prevnext">
-          <svg class="prev-icon" width="20" height="20">
-            <use href="/calendar/images/icons.svg#left_arrow_icon"></use>
-          </svg>
-        </button>
-        <p class="js-month month"></p>
-
-        <button type="button" class="next js-prevnext">
-          <svg class="next-icon" width="20" height="20">
-            <use href="/calendar/images/icons.svg#right_arrow_icon"></use>
-          </svg>
-        </button>
-        <input
-          type="date"
-          name="date"
-          id="date"
-          class="js-choose-date choose-date"
-        />
+        <div class="date-switcher">
+          <button type="button" class="prev js-prevnext">
+            <svg class="prev-icon" width="20" height="20">
+              <use href="/calendar/images/icons.svg#left_arrow_icon"></use>
+            </svg>
+          </button>
+          <p class="js-month month"></p>
+          <button type="button" class="next js-prevnext">
+            <svg class="next-icon" width="20" height="20">
+              <use href="/calendar/images/icons.svg#right_arrow_icon"></use>
+            </svg>
+          </button>
+          <div class="date-wrapper">
+            <input type="date" name="date" id="date" class="js-choose-date" />
+            <label for="date" class="choose-date">
+              <svg class="date-icon" width="20" height="20">
+                <use href="/calendar/images/icons.svg#calendar_icon"></use>
+              </svg>
+            </label>
+          </div>
+        </div>
       </div>
       <ul class="calendar"></ul>
       <div class="backdrop js-backdrop">
         <div class="modal js-modal">
           <button type="button" class="close-modal js-close">
-            <svg class="close-icon" width="40" height="40">
+            <svg class="close-icon" width="30" height="30">
               <use href="/calendar/images/icons.svg#close_icon"></use>
             </svg>
           </button>
-          <h2>Add new idea item</h2>
+          <h2 class="modal-title">Add new idea item</h2>
           <form class="modal-form">
-            <label class="form-label">Title</label>
+            <label for="title" class="form-label required">Title</label>
             <input
               type="text"
               name="title"
               id="title"
+              class="title"
               placeholder="Title goes here"
               required
             />
-            <label class="form-label">Description</label>
-            <input
-              type="textarea"
+            <label for="description" class="form-label">Description</label>
+            <textarea
               class="description"
               name="description"
               id="description"
               rows="4"
               cols="1"
+            ></textarea>
+            <label for="date" class="form-label required">Date</label>
+            <input
+              type="datetime-local"
+              class="date"
+              id="date"
+              name="date"
+              required
             />
-            <label class="form-label"></label>
-            <input type="datetime-local" class="date" id="date" />
-            <button type="submit" class="submit">Save</button>
+            <button type="submit" class="submit" disabled>Save</button>
           </form>
         </div>
       </div>
