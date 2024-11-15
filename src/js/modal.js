@@ -25,6 +25,7 @@ export const open = (date = new Date()) => {
 export const close = () => {
   refs.backdrop.classList.remove("is-open");
 };
+
 refs.openModal.addEventListener("click", () => {
   open();
 });

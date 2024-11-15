@@ -14,6 +14,14 @@ const setToLocalStorage = (tasks) => {
   localStorage.setItem("Tasks", JSON.stringify(tasks));
 };
 
+refs.form.querySelectorAll("input[required]").forEach((input) =>
+  input.addEventListener("change", () => {
+    if (refs.form.checkValidity()) {
+      refs.submitBtn.removeAttribute("disabled");
+    }
+  })
+);
+
 refs.form.addEventListener("submit", (e, taskStorage) => {
   e.preventDefault();
 

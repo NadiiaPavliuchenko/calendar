@@ -79,8 +79,6 @@
   .title {
     height: 30px;
   }
-  .date {
-  }
   .submit {
     align-self: flex-end;
 
@@ -96,7 +94,7 @@
     border: 1px solid black;
     border-radius: 5px;
 
-    &.disabled {
+    &[disabled] {
       border-color: lightgray;
       color: lightgray;
     }
