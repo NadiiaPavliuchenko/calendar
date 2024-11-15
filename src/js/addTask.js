@@ -1,15 +1,34 @@
+import { close } from "./modal";
+
 const refs = {
   form: document.querySelector(".modal-form"),
-};
-export const setDateValue = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-
-  const dateString = `${year}-${month}-${day}T${hours}:${minutes}`;
-  refs.form.elements.date.value = dateString;
+  submitBtn: document.querySelector(".submit"),
 };
 
-export const addTask = () => {};
+const getFromLocalStorage = () => {
+  let taskStorage = localStorage.getItem("Tasks");
+  return taskStorage ? JSON.parse(taskStorage) : [];
+};
+
+const setToLocalStorage = (tasks) => {
+  localStorage.setItem("Tasks", JSON.stringify(tasks));
+};
+
+refs.form.addEventListener("submit", (e, taskStorage) => {
+  e.preventDefault();
+
+  const newTask = {
+    title: refs.form.elements.title.value,
+    description: refs.form.elements.description.value,
+    date: refs.form.elements.date.value,
+  };
+
+  taskStorage = getFromLocalStorage();
+
+  taskStorage.push(newTask);
+
+  setToLocalStorage(taskStorage);
+
+  e.target.reset();
+  close();
+});
