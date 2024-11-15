@@ -40,31 +40,31 @@
       <div class="backdrop js-backdrop">
         <div class="modal js-modal">
           <button type="button" class="close-modal js-close">
-            <svg class="close-icon" width="40" height="40">
+            <svg class="close-icon" width="30" height="30">
               <use href="/images/icons.svg#close_icon"></use>
             </svg>
           </button>
-          <h2>Add new idea item</h2>
+          <h2 class="modal-title">Add new idea item</h2>
           <form class="modal-form">
-            <label class="form-label">Title</label>
+            <label for="title" class="form-label required">Title</label>
             <input
               type="text"
               name="title"
               id="title"
+              class="title"
               placeholder="Title goes here"
               required
             />
-            <label class="form-label">Description</label>
-            <input
-              type="textarea"
+            <label for="description" class="form-label">Description</label>
+            <textarea
               class="description"
               name="description"
               id="description"
               rows="4"
               cols="1"
-            />
-            <label class="form-label"></label>
-            <input type="datetime-local" class="date" id="date" />
+            ></textarea>
+            <label for="date" class="form-label required">Date</label>
+            <input type="datetime-local" class="date" id="date" required />
             <button type="submit" class="submit">Save</button>
           </form>
         </div>

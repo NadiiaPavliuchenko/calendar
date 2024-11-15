@@ -25,6 +25,7 @@
   width: 400px;
   height: 500px;
   padding: 40px;
+  border-radius: 5px;
 
   background-color: white;
   -webkit-box-shadow: 10px 10px 13px -6px rgba(240, 166, 240, 1);
@@ -32,11 +33,72 @@
   box-shadow: 10px 10px 13px -6px rgba(240, 166, 240, 1);
 
   & .close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    cursor: pointer;
     stroke: black;
   }
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 
 .modal-form {
   display: flex;
   flex-direction: column;
+
+  .form-label {
+    color: rgb(142, 141, 141);
+    margin-bottom: 10px;
+    position: relative;
+
+    &.required::after {
+      content: "*";
+      position: absolute;
+      top: 0;
+      left: 30px;
+      color: red;
+      width: 1px;
+      height: 1px;
+    }
+  }
+  input,
+  .description {
+    width: 100%;
+    padding: 5px;
+    border-bottom: 1px solid rgb(142, 141, 141);
+    font-size: 18px;
+    color: rgb(142, 141, 141);
+    margin-bottom: 20px;
+  }
+  .title {
+    height: 30px;
+  }
+  .date {
+  }
+  .submit {
+    align-self: flex-end;
+
+    cursor: pointer;
+
+    width: 70px;
+    height: 40px;
+    margin-top: 20px;
+
+    text-align: center;
+    text-transform: uppercase;
+
+    border: 1px solid black;
+    border-radius: 5px;
+
+    &.disabled {
+      border-color: lightgray;
+      color: lightgray;
+    }
+  }
 }
