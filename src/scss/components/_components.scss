@@ -1,16 +1,42 @@
-.controls {
-}
-.add-task {
-}
-.js-add-task {
-}
-.currrent {
-}
-.prev {
-}
-.month {
-}
-.next {
-}
-.choose-date {
+.cell {
+  border: 1px solid lightgray;
+  padding: 8px;
+
+  &.today {
+    background-color: rgba(173, 255, 47, 0.5);
+    border-color: rgb(173, 255, 47);
+  }
+  &.disabled {
+    color: lightgray;
+  }
+
+  .cell-features {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: auto;
+
+    .task-element {
+      background-color: rgb(220, 220, 220, 0.3);
+      border-radius: 5px;
+      padding: 2px;
+      transition: background-color, ease-in-out, 200ms;
+
+      &:hover,
+      :focus {
+        background-color: rgba(187, 185, 185, 0.3);
+      }
+      &:active {
+        background-color: rgba(187, 185, 185, 0.3);
+      }
+    }
+  }
 }

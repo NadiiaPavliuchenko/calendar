@@ -110,7 +110,6 @@ drawCalendar();
 
 const visualizeTasks = () => {
   const tasks = JSON.parse(localStorage.getItem("Tasks"));
-  console.log(tasks);
 
   document.querySelectorAll(".tasks-container").forEach((container) => {
     const cellDate = container.closest(".cell").getAttribute("data-date");
@@ -143,6 +142,7 @@ refs.buttons.forEach((button) =>
     month = today.getMonth();
 
     drawCalendar();
+    visualizeTasks();
   })
 );
 
