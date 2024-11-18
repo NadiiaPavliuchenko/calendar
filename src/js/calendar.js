@@ -108,26 +108,28 @@ const drawCalendar = (curDay = CURRENTDATE) => {
 
 drawCalendar();
 
-const visualizeTasks = () => {
-  const tasks = JSON.parse(localStorage.getItem("Tasks"));
-
+export const addToCalendar = (task) => {
   document.querySelectorAll(".tasks-container").forEach((container) => {
     const cellDate = container.closest(".cell").getAttribute("data-date");
 
-    const taskList = tasks.filter((task) =>
-      compareDates(new Date(cellDate), new Date(task.date))
-    );
-
-    if (taskList.length > 0) {
-      taskList.forEach((task) => {
-        const taskElement = document.createElement("li");
-        taskElement.classList.add("task-element");
-        taskElement.innerHTML = `<p class="task-title">${task.title} <span class="task-description">${task.description}</span></p>`;
-        fragment.appendChild(taskElement);
-      });
+    if (compareDates(new Date(cellDate), new Date(task.date))) {
+      const taskElement = document.createElement("li");
+      taskElement.classList.add("task-element");
+      taskElement.setAttribute("key", task.id);
+      taskElement.innerHTML = `<p class="task-title">${task.title}</p>
+                               <p class="task-description">${task.description}</p>`;
+      container.appendChild(taskElement);
     }
-    container.appendChild(fragment);
   });
+};
+
+const visualizeTasks = () => {
+  const tasks = JSON.parse(localStorage.getItem("Tasks"));
+  if (tasks) {
+    tasks.forEach((task) => {
+      addToCalendar(task);
+    });
+  }
 };
 
 visualizeTasks();
@@ -167,8 +169,12 @@ document.querySelectorAll(".task-element").forEach((task) => {
   const cellDate = task.closest(".cell").getAttribute("data-date");
   task.addEventListener("click", (e) => {
     e.stopPropagation();
-    const title = e.target.textContent;
-    const description = e.target.querySelector(".task-description").textContent;
-    open(new Date(cellDate), title, description);
+    const taskData = {
+      id: task.getAttribute("key"),
+      title: e.currentTarget.querySelector(".task-title").textContent,
+      description:
+        e.currentTarget.querySelector(".task-description").textContent,
+    };
+    open(new Date(cellDate), "edit", taskData);
   });
 });

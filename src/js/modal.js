@@ -13,15 +13,18 @@ const setDateValue = (date) => {
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
 
-  const dateString = `${year}-${month}-${day}T${hours}:${minutes}`;
-  refs.form.elements.date.value = dateString;
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
-export const open = (date = new Date(), title = "", description = "") => {
-  setDateValue(date);
+export const open = (date, mode = "add", task) => {
+  refs.form.setAttribute("data-mode", mode);
+  refs.form.elements.date.value = setDateValue(date);
 
-  refs.form.elements.title.value = title;
-  refs.form.elements.description.value = description;
+  if (mode === "edit") {
+    refs.modal.setAttribute("data-task", task.id);
+    refs.form.elements.title.value = task.title;
+    refs.form.elements.description.value = task.description;
+  }
   refs.backdrop.classList.add("is-open");
 };
 
@@ -30,7 +33,7 @@ export const close = () => {
 };
 
 refs.openModal.addEventListener("click", () => {
-  open();
+  open(new Date());
 });
 
 refs.closeModal.addEventListener("click", () => {

@@ -1,6 +1,8 @@
 import { close } from "./modal";
+import { addToCalendar } from "./calendar";
 
 const refs = {
+  modal: document.querySelector(".js-modal"),
   form: document.querySelector(".modal-form"),
   submitBtn: document.querySelector(".submit"),
 };
@@ -22,8 +24,26 @@ refs.form.querySelectorAll("input[required]").forEach((input) =>
   })
 );
 
-refs.form.addEventListener("submit", (e, taskStorage) => {
+const addTask = (task) => {
+  const taskStorage = getFromLocalStorage();
+  taskStorage.push(task);
+  setToLocalStorage(taskStorage);
+  addToCalendar(task);
+};
+
+const editTask = (taskId, task) => {
+  const taskStorage = getFromLocalStorage();
+  const index = taskStorage.findIndex((task) => String(task.id) === taskId);
+  if (index !== -1) {
+    taskStorage[index] = { id: taskId, ...task };
+    setToLocalStorage(taskStorage);
+  }
+};
+
+refs.form.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  const mode = refs.form.getAttribute("data-mode");
 
   const newTask = {
     title: refs.form.elements.title.value,
@@ -31,11 +51,14 @@ refs.form.addEventListener("submit", (e, taskStorage) => {
     date: refs.form.elements.date.value,
   };
 
-  taskStorage = getFromLocalStorage();
+  if (mode === "add") {
+    addTask({ ...newTask, id: Date.now() });
+  }
+  if (mode === "edit") {
+    const id = refs.modal.getAttribute("data-task");
 
-  taskStorage.push(newTask);
-
-  setToLocalStorage(taskStorage);
+    editTask(id, newTask);
+  }
 
   e.target.reset();
   close();
