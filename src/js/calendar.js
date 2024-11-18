@@ -47,12 +47,16 @@ function isLeapYear() {
   return days;
 }
 
+const compareDates = (date1, date2) => {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+};
+
 const markToday = (cell, cellDate, curDay) => {
-  if (
-    cellDate.getFullYear() === curDay.getFullYear() &&
-    cellDate.getMonth() === curDay.getMonth() &&
-    cellDate.getDate() === curDay.getDate()
-  ) {
+  if (compareDates(cellDate, curDay)) {
     cell.classList.add("today");
   }
 };
@@ -103,6 +107,31 @@ const drawCalendar = (curDay = CURRENTDATE) => {
 };
 
 drawCalendar();
+
+const visualizeTasks = () => {
+  const tasks = JSON.parse(localStorage.getItem("Tasks"));
+  console.log(tasks);
+
+  document.querySelectorAll(".tasks-container").forEach((container) => {
+    const cellDate = container.closest(".cell").getAttribute("data-date");
+
+    const taskList = tasks.filter((task) =>
+      compareDates(new Date(cellDate), new Date(task.date))
+    );
+
+    if (taskList.length > 0) {
+      taskList.forEach((task) => {
+        const taskElement = document.createElement("div");
+        taskElement.classList.add("task-element");
+        taskElement.innerHTML = `${task.title}`;
+        fragment.appendChild(taskElement);
+      });
+    }
+    container.appendChild(fragment);
+  });
+};
+
+visualizeTasks();
 
 refs.buttons.forEach((button) =>
   button.addEventListener("click", () => {
