@@ -17,8 +17,11 @@ const setDateValue = (date) => {
   refs.form.elements.date.value = dateString;
 };
 
-export const open = (date = new Date()) => {
+export const open = (date = new Date(), title = "", description = "") => {
   setDateValue(date);
+
+  refs.form.elements.title.value = title;
+  refs.form.elements.description.value = description;
   refs.backdrop.classList.add("is-open");
 };
 

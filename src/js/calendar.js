@@ -88,7 +88,7 @@ const drawCalendar = (curDay = CURRENTDATE) => {
                           cellDate.getDay()
                         ].substring(0, 2)}</p>
                       </div>
-                      <div class="tasks-container"></div>`;
+                      <ul class="tasks-container"></ul>`;
     return cell;
   };
 
@@ -120,9 +120,9 @@ const visualizeTasks = () => {
 
     if (taskList.length > 0) {
       taskList.forEach((task) => {
-        const taskElement = document.createElement("div");
+        const taskElement = document.createElement("li");
         taskElement.classList.add("task-element");
-        taskElement.innerHTML = `${task.title}`;
+        taskElement.innerHTML = `<p class="task-title">${task.title} <span class="task-description">${task.description}</span></p>`;
         fragment.appendChild(taskElement);
       });
     }
@@ -153,11 +153,22 @@ refs.datepicker.addEventListener("change", (e) => {
   month = today.getMonth();
 
   drawCalendar(today);
+  visualizeTasks();
 });
 
 document.querySelectorAll(".cell").forEach((cell) => {
   cell.addEventListener("click", (e) => {
     const cellDate = e.target.getAttribute("data-date");
     open(new Date(cellDate));
+  });
+});
+
+document.querySelectorAll(".task-element").forEach((task) => {
+  const cellDate = task.closest(".cell").getAttribute("data-date");
+  task.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const title = e.target.textContent;
+    const description = e.target.querySelector(".task-description").textContent;
+    open(new Date(cellDate), title, description);
   });
 });
