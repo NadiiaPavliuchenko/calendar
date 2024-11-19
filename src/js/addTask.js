@@ -1,5 +1,5 @@
 import { close } from "./modal";
-import { addToCalendar } from "./calendar";
+import { addToCalendar, repaintTask } from "./calendar";
 
 const refs = {
   modal: document.querySelector(".js-modal"),
@@ -16,13 +16,13 @@ const setToLocalStorage = (tasks) => {
   localStorage.setItem("Tasks", JSON.stringify(tasks));
 };
 
-refs.form.querySelectorAll("input[required]").forEach((input) =>
+refs.form.querySelectorAll("input[required]").forEach((input) => {
   input.addEventListener("change", () => {
     if (refs.form.checkValidity()) {
       refs.submitBtn.removeAttribute("disabled");
     }
-  })
-);
+  });
+});
 
 const addTask = (task) => {
   const taskStorage = getFromLocalStorage();
@@ -37,6 +37,8 @@ const editTask = (taskId, task) => {
   if (index !== -1) {
     taskStorage[index] = { id: taskId, ...task };
     setToLocalStorage(taskStorage);
+    console.log(taskId);
+    repaintTask(taskStorage[index]);
   }
 };
 

@@ -123,6 +123,17 @@ export const addToCalendar = (task) => {
   });
 };
 
+export const repaintTask = (task) => {
+  document.querySelectorAll(".task-element").forEach((taskElement) => {
+    const key = taskElement.getAttribute("key");
+    if (key === task.id) {
+      taskElement.querySelector(".task-title").innerHTML = task.title;
+      taskElement.querySelector(".task-description").innerHTML =
+        task.description;
+    }
+  });
+};
+
 const visualizeTasks = () => {
   const tasks = JSON.parse(localStorage.getItem("Tasks"));
   if (tasks) {

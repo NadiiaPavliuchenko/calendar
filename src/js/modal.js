@@ -4,6 +4,7 @@ const refs = {
   modal: document.querySelector(".js-modal"),
   closeModal: document.querySelector(".js-close"),
   form: document.querySelector(".modal-form"),
+  submitBtn: document.querySelector(".submit"),
 };
 
 const setDateValue = (date) => {
@@ -16,17 +17,41 @@ const setDateValue = (date) => {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
-export const open = (date, mode = "add", task) => {
+export const open = (date, mode = "add", task = {}) => {
+  const isEditMode = mode === "edit";
+
   refs.form.setAttribute("data-mode", mode);
   refs.form.elements.date.value = setDateValue(date);
 
-  if (mode === "edit") {
-    refs.modal.setAttribute("data-task", task.id);
-    refs.form.elements.title.value = task.title;
-    refs.form.elements.description.value = task.description;
+  if (isEditMode) {
+    refs.modal.setAttribute("data-task", task.id || "");
+  } else {
+    refs.modal.removeAttribute("data-task");
   }
+
+  updateFormValues({
+    title: isEditMode ? task.title : "",
+    description: isEditMode ? task.description : "",
+    submitDisabled: !isEditMode,
+  });
+
   refs.backdrop.classList.add("is-open");
 };
+
+function updateFormValues({
+  title = "",
+  description = "",
+  submitDisabled = true,
+}) {
+  refs.form.elements.title.value = title;
+  refs.form.elements.description.value = description;
+
+  if (submitDisabled) {
+    refs.submitBtn.setAttribute("disabled", true);
+  } else {
+    refs.submitBtn.removeAttribute("disabled");
+  }
+}
 
 export const close = () => {
   refs.backdrop.classList.remove("is-open");
