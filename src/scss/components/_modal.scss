@@ -79,6 +79,10 @@
   .title {
     height: 30px;
   }
+
+  .submit {
+    align-self: flex-end;
+  }
 }
 
 .button {
@@ -98,4 +102,10 @@
     border-color: lightgray;
     color: lightgray;
   }
+}
+
+.delete {
+  position: absolute;
+  bottom: 50px;
+  right: 125px;
 }
