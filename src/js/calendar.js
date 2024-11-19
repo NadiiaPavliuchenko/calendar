@@ -193,16 +193,19 @@ document.querySelectorAll(".cell").forEach((cell) => {
   });
 });
 
-document.querySelectorAll(".task-element").forEach((task) => {
-  const cellDate = task.closest(".cell").getAttribute("data-date");
-  task.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const taskData = {
-      id: task.getAttribute("key"),
-      title: e.currentTarget.querySelector(".task-title").textContent,
-      description:
-        e.currentTarget.querySelector(".task-description").textContent,
-    };
-    open(new Date(cellDate), "edit", taskData);
-  });
-});
+document.querySelectorAll(".tasks-container").forEach((container) =>
+  container.addEventListener("click", (e) => {
+    const task = e.target.closest(".task-element");
+
+    if (task) {
+      e.stopPropagation();
+      const cellDate = task.closest(".cell").getAttribute("data-date");
+      const taskData = {
+        id: task.getAttribute("key"),
+        title: task.querySelector(".task-title").textContent,
+        description: task.querySelector(".task-description").textContent,
+      };
+      open(new Date(cellDate), "edit", taskData);
+    }
+  })
+);
