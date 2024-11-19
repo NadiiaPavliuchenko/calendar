@@ -79,24 +79,23 @@
   .title {
     height: 30px;
   }
-  .submit {
-    align-self: flex-end;
+}
 
-    cursor: pointer;
+.button {
+  cursor: pointer;
 
-    width: 70px;
-    height: 40px;
-    margin-top: 20px;
+  width: 70px;
+  height: 40px;
+  margin-top: 20px;
 
-    text-align: center;
-    text-transform: uppercase;
+  text-align: center;
+  text-transform: uppercase;
 
-    border: 1px solid black;
-    border-radius: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
 
-    &[disabled] {
-      border-color: lightgray;
-      color: lightgray;
-    }
+  &[disabled] {
+    border-color: lightgray;
+    color: lightgray;
   }
 }

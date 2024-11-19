@@ -1,3 +1,5 @@
+import { deleteTask } from "./addTask";
+
 const refs = {
   openModal: document.querySelector(".js-add-task"),
   backdrop: document.querySelector(".js-backdrop"),
@@ -23,8 +25,21 @@ export const open = (date, mode = "add", task = {}) => {
   refs.form.setAttribute("data-mode", mode);
   refs.form.elements.date.value = setDateValue(date);
 
+  const deleteBtn = document.createElement("button");
+
+  const existingDeleteBtn = refs.modal.querySelector(".delete");
+
+  if (existingDeleteBtn) {
+    existingDeleteBtn.remove();
+  }
+
   if (isEditMode) {
     refs.modal.setAttribute("data-task", task.id || "");
+    deleteBtn.classList.add("button", "delete");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", deleteTask);
+
+    refs.modal.appendChild(deleteBtn);
   } else {
     refs.modal.removeAttribute("data-task");
   }

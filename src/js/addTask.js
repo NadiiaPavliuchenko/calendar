@@ -1,5 +1,5 @@
 import { close } from "./modal";
-import { addToCalendar, repaintTask } from "./calendar";
+import { addToCalendar, repaintTask, eraseTask } from "./calendar";
 
 const refs = {
   modal: document.querySelector(".js-modal"),
@@ -37,7 +37,6 @@ const editTask = (taskId, task) => {
   if (index !== -1) {
     taskStorage[index] = { id: taskId, ...task };
     setToLocalStorage(taskStorage);
-    console.log(taskId);
     repaintTask(taskStorage[index]);
   }
 };
@@ -65,3 +64,18 @@ refs.form.addEventListener("submit", (e) => {
   e.target.reset();
   close();
 });
+
+export const deleteTask = () => {
+  const taskStorage = getFromLocalStorage();
+  const taskId = refs.modal.getAttribute("data-task");
+
+  const index = taskStorage.findIndex((task) => String(task.id) === taskId);
+  console.log(index);
+  if (index !== -1) {
+    taskStorage.splice(index, 1);
+    setToLocalStorage(taskStorage);
+
+    eraseTask({ id: taskId });
+    close();
+  }
+};

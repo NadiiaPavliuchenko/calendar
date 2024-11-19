@@ -126,10 +126,27 @@ export const addToCalendar = (task) => {
 export const repaintTask = (task) => {
   document.querySelectorAll(".task-element").forEach((taskElement) => {
     const key = taskElement.getAttribute("key");
+
+    if (!task.title || !task.description) {
+      if (key === task.id) {
+        taskElement.remove();
+      }
+    }
+
     if (key === task.id) {
       taskElement.querySelector(".task-title").innerHTML = task.title;
       taskElement.querySelector(".task-description").innerHTML =
         task.description;
+    }
+  });
+};
+
+export const eraseTask = (task) => {
+  document.querySelectorAll(".task-element").forEach((taskElement) => {
+    const key = taskElement.getAttribute("key");
+
+    if (key === task.id) {
+      taskElement.remove();
     }
   });
 };
