@@ -89,6 +89,7 @@ const drawCalendar = (curDay = CURRENTDATE) => {
                         ].substring(0, 2)}</p>
                       </div>
                       <ul class="tasks-container"></ul>`;
+    cell.addEventListener("click", openForm);
     return cell;
   };
 
@@ -118,6 +119,7 @@ export const addToCalendar = (task) => {
       taskElement.setAttribute("key", task.id);
       taskElement.innerHTML = `<p class="task-title">${task.title}</p>
                                <p class="task-description">${task.description}</p>`;
+      taskElement.addEventListener("click", openEditForm);
       container.appendChild(taskElement);
     }
   });
@@ -186,26 +188,22 @@ refs.datepicker.addEventListener("change", (e) => {
   visualizeTasks();
 });
 
-document.querySelectorAll(".cell").forEach((cell) => {
-  cell.addEventListener("click", (e) => {
-    const cellDate = e.target.getAttribute("data-date");
-    open(new Date(cellDate));
-  });
-});
+function openForm(e) {
+  const cellDate = e.target.getAttribute("data-date");
+  open(new Date(cellDate));
+}
 
-document.querySelectorAll(".tasks-container").forEach((container) =>
-  container.addEventListener("click", (e) => {
-    const task = e.target.closest(".task-element");
+function openEditForm(e) {
+  const task = e.target.closest(".task-element");
 
-    if (task) {
-      e.stopPropagation();
-      const cellDate = task.closest(".cell").getAttribute("data-date");
-      const taskData = {
-        id: task.getAttribute("key"),
-        title: task.querySelector(".task-title").textContent,
-        description: task.querySelector(".task-description").textContent,
-      };
-      open(new Date(cellDate), "edit", taskData);
-    }
-  })
-);
+  if (task) {
+    e.stopPropagation();
+    const cellDate = task.closest(".cell").getAttribute("data-date");
+    const taskData = {
+      id: task.getAttribute("key"),
+      title: task.querySelector(".task-title").textContent,
+      description: task.querySelector(".task-description").textContent,
+    };
+    open(new Date(cellDate), "edit", taskData);
+  }
+}
